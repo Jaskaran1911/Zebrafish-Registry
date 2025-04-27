@@ -15,8 +15,14 @@ app.config['SECRET_KEY'] = secrets.token_hex(32)
 app.config['JWT_SECRET_KEY'] = secrets.token_hex(32)
 
 # Configure database
-# Update this line with the correct database name
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Zebrafishjas@localhost/Zebrafish'
+# Database URL from environment variable (for Render.com deployment)
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:Zebrafishjas@localhost/Zebrafish')
+
+# Handle Render.com PostgreSQL URL format
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Enable CORS with secure configuration
