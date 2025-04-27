@@ -28,7 +28,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Enable CORS with secure configuration
 CORS(app, 
     resources={r"/api/*": {
-        "origins": ["http://localhost:3000"],
+        "origins": [
+            "http://localhost:3000",
+            "https://zebrafish-registry.web.app"  # Add your Firebase URL
+        ],
         "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization", "X-CSRF-TOKEN", "X-CSRF-TOKEN-ID"],
         "supports_credentials": True,
