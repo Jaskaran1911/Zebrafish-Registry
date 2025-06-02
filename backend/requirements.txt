@@ -10,3 +10,5 @@ psycopg2-binary==2.9.3
 sqlalchemy==1.4.23  # This is the correct version for SQLAlchemy
 Werkzeug==2.0.1
 flask-limiter==1.4
+stripe>=9.0.0
+requests>=2.31.0
