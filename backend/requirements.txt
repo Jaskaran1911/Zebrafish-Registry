@@ -12,3 +12,5 @@ Werkzeug==2.0.1
 flask-limiter==1.4
 stripe>=9.0.0
 requests>=2.31.0
+marshmallow>=3.20.0      # NEW
+flask-marshmallow>=1.2.0 # NEW only if you import flask_marshmallow
