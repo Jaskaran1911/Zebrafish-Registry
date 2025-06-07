@@ -73,17 +73,20 @@ from audit import log_audit, audit_route
 from security_headers import add_security_headers
 from error_handlers import register_error_handlers
 import schemas
-import functions_framework
 
 
 # Configure proper CORS to allow frontend connections
-CORS(app, 
-     resources={r"/api/*": {
-         "origins": ["http://localhost:3000"],
-         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-         "allow_headers": ["Content-Type", "Authorization"],
-         "supports_credentials": True
-     }}
+CORS(
+    app,
+    resources={r"/api/*": {
+        "origins": [
+            "https://zebrafishregistry.web.app",
+            "https://zebrafishregistry.firebaseapp.com"
+        ],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True
+    }}
 )
 
 # CORS configured in config.py  # Add this line after creating the Flask app
@@ -1812,8 +1815,13 @@ def add_security_headers(response):
 # Update the after_request function
 @app.after_request
 def after_request(response):
-    # Set CORS headers specifically for your frontend origin
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost:3000"
+    allowed_origins = {
+        "https://zebrafishregistry.web.app",
+        "https://zebrafishregistry.firebaseapp.com"
+    }
+    origin = request.headers.get("Origin")
+    if origin in allowed_origins:
+        response.headers["Access-Control-Allow-Origin"] = origin
     response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
     response.headers["Access-Control-Allow-Methods"] = "GET,PUT,POST,DELETE,OPTIONS,PATCH"
     response.headers["Access-Control-Allow-Credentials"] = "true"
@@ -1931,20 +1939,6 @@ def init_test_data():
         print(f"Error creating test data: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@functions_framework.http
-def app(request):
-    """HTTP Cloud Function entry point."""
-    # This enables CORS for all requests
-    if request.method == 'OPTIONS':
-        # Handle preflight requests
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Max-Age': '3600'
-        }
-        return ('', 204, headers)
-    
-    # Run the Flask application
-    return app.wsgi_app(request.environ, start_response)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
 
