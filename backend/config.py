@@ -29,8 +29,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app, 
     resources={r"/api/*": {
         "origins": [
-            "http://localhost:3000",
-            "https://zebrafish-registry.web.app"  # Add your Firebase URL
+            "https://zebrafishregistry.web.app",
+            "https://zebrafishregistry.firebaseapp.com"
         ],
         "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization", "X-CSRF-TOKEN", "X-CSRF-TOKEN-ID"],

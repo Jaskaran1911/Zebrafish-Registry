@@ -77,12 +77,15 @@ import schemas
 
 # Configure proper CORS to allow frontend connections
 CORS(app, 
-     resources={r"/api/*": {
-         "origins": ["http://localhost:3000"],
-         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-         "allow_headers": ["Content-Type", "Authorization"],
-         "supports_credentials": True
-     }}
+    resources={r"/api/*": {
+        "origins": [
+            "https://zebrafishregistry.web.app",
+            "https://zebrafishregistry.firebaseapp.com"
+        ],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True
+    }}
 )
 
 # CORS configured in config.py  # Add this line after creating the Flask app
