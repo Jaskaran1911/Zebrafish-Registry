@@ -38,3 +38,10 @@ For production environments, consider:
 3. Implement IP-based rate limiting
 4. Use a web application firewall (WAF)
 5. Regular security audits and penetration testing
+## Deployment on Render
+
+1. Create a PostgreSQL database on Render and copy the connection string.
+2. Set the `DATABASE_URL` environment variable in your service settings.
+3. Deploy using the provided `render.yaml` which installs dependencies from `backend/requirements.txt` and starts the app with `gunicorn app:app --chdir backend`.
+4. The app listens on the port specified by the `PORT` environment variable so Render can assign a port automatically.
+5. CORS is configured in the backend to allow requests from `https://zebrafishregistry.web.app` and `https://zebrafishregistry.firebaseapp.com`.
