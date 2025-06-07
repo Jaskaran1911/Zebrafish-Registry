@@ -42,4 +42,4 @@ For production environments, consider:
 
 1. Create a PostgreSQL database on Render and copy the connection string.
 2. Set the `DATABASE_URL` environment variable in your service settings.
-3. Deploy using the provided `render.yaml` which installs dependencies from `backend/requirements.txt` and starts the app with Gunicorn.
+3. Deploy using the provided `render.yaml` which installs dependencies from `backend/requirements.txt` and starts the app with `gunicorn app:app --chdir backend`.
