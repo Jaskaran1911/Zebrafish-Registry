@@ -77,9 +77,6 @@ class UserModel(db.Model):
     # Add this relationship (uncomment it):
     # facility = db.relationship('FacilityModel', back_populates='users')
     
-    @property
-    def is_super_admin(self):
-        return self.is_super_admin
 
 class BreedingProfileModel(db.Model):
     __tablename__ = 'breeding_profiles'
